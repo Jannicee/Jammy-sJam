@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -233,8 +232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5733079, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.4436035, y: -3.0474243}
-  m_SizeDelta: {x: 49.8994, y: 3.678009}
+  m_AnchoredPosition: {x: -53, y: 2.4714}
+  m_SizeDelta: {x: -3.136, y: -1.612}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &122290517
 MonoBehaviour:
@@ -366,7 +365,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.13424341, y: 0.10476293}
   m_AnchorMax: {x: 0.41529715, y: 0.28064403}
-  m_AnchoredPosition: {x: 1.2600098, y: 1}
+  m_AnchoredPosition: {x: 1.2600098, y: 1.0000305}
   m_SizeDelta: {x: -1.3999939, y: 1.269989}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &174791271
@@ -659,8 +658,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961f3947365151b41bb761f7ce443609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newButtonImage: {fileID: -1584350721, guid: 5ebd14cd8cfa227459718de3f1cbbc9c, type: 3}
-  button: {fileID: 218107602}
 --- !u!1 &304443176
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,7 +963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1158,8 +1155,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.057461455, y: 0}
   m_AnchorMax: {x: 0.4581542, y: 1}
-  m_AnchoredPosition: {x: 1.5563965, y: 0.5525818}
-  m_SizeDelta: {x: 55, y: 1.2667007}
+  m_AnchoredPosition: {x: -5.5787964, y: 1.6386986}
+  m_SizeDelta: {x: 0.91751, y: 0.092979}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &956993577
 MonoBehaviour:

@@ -4,18 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Apple
-  - PineApple
-  - Peanut
-  - line
-  - coin
-  - fruit
-  - Knife
+  - apple
+  - strawberry
+  - blueberry
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Sprite
   - Water
   - UI
   - 
