@@ -25,6 +25,7 @@ public class FruitBox : MonoBehaviour
 
     private void OnMouseDown()
     {
+        Debug.Log(Debug.isDebugBuild ? "Mouse down on: " + gameObject.name : "");
         isHoldingFruit = true;
 
         ShowFruit();
@@ -77,6 +78,18 @@ public class FruitBox : MonoBehaviour
             return;
         }
 
+        // Aktifkan object
         fruitObject.SetActive(true);
+
+        // Aktifkan kembali sprite
+        fruitDisplay.enabled = true;
+
+        // Aktifkan kembali collider
+        Collider2D collider = fruitObject.GetComponent<Collider2D>();
+
+        if (collider != null)
+        {
+            collider.enabled = true;
+        }
     }
 }

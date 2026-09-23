@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class IngredientBasket : MonoBehaviour
 {
@@ -21,19 +22,52 @@ public class IngredientBasket : MonoBehaviour
     [Header("Popup UI")]
     public GameObject popupUI;
 
+    [Tooltip("Berapa detik popup ditampilkan")]
+    public float popupDuration = 1.5f;
+
+    private Coroutine popupCoroutine;
+
+
     private void Start()
     {
         UpdateCountUI();
+
+        if (popupUI != null)
+        {
+            popupUI.SetActive(false);
+        }
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        FruitObject fruit =
-            other.GetComponent<FruitObject>();
+        Debug.Log(
+            "Basket terkena object: " +
+            other.gameObject.name
+        );
 
+        FruitObject fruit = other.GetComponentInParent<FruitObject>();
+
+
+        // Pastikan FruitObject ditemukan terlebih dahulu
         if (fruit == null)
-            return;
+        {
+            Debug.LogWarning(
+                "Tidak menemukan FruitObject pada: " +
+                other.gameObject.name
+            );
 
+            return;
+        }
+
+
+        Debug.Log(
+            "Fruit detected: " +
+            fruit.fruitType
+        );
+
+
+        // Cek jenis buah
         switch (fruit.fruitType)
         {
             case FruitObject.FruitType.Apple:
@@ -45,7 +79,14 @@ public class IngredientBasket : MonoBehaviour
                 }
 
                 appleCount++;
+
+                Debug.Log(
+                    "Apple masuk basket. Jumlah: " +
+                    appleCount
+                );
+
                 break;
+
 
             case FruitObject.FruitType.Blueberry:
 
@@ -56,7 +97,14 @@ public class IngredientBasket : MonoBehaviour
                 }
 
                 blueberryCount++;
+
+                Debug.Log(
+                    "Blueberry masuk basket. Jumlah: " +
+                    blueberryCount
+                );
+
                 break;
+
 
             case FruitObject.FruitType.Strawberry:
 
@@ -67,75 +115,23 @@ public class IngredientBasket : MonoBehaviour
                 }
 
                 strawberryCount++;
+
+                Debug.Log(
+                    "Strawberry masuk basket. Jumlah: " +
+                    strawberryCount
+                );
+
                 break;
         }
 
+
+        // Sembunyikan buah setelah berhasil masuk basket
         fruit.HideFruit();
 
+        // Update angka UI
         UpdateCountUI();
     }
 
-    private void AddApple(GameObject fruit)
-    {
-        if (appleCount >= maxApple)
-        {
-            ShowPopup();
-            return;
-        }
-
-        appleCount++;
-
-        Debug.Log("Apple masuk basket. Jumlah: " + appleCount);
-
-        HideFruitSprite(fruit);
-
-        UpdateCountUI();
-    }
-
-    private void AddBlueberry(GameObject fruit)
-    {
-        if (blueberryCount >= maxBlueberry)
-        {
-            ShowPopup();
-            return;
-        }
-
-        blueberryCount++;
-
-        Debug.Log("Blueberry masuk basket. Jumlah: " + blueberryCount);
-
-        HideFruitSprite(fruit);
-
-        UpdateCountUI();
-    }
-
-    private void AddStrawberry(GameObject fruit)
-    {
-        if (strawberryCount >= maxStrawberry)
-        {
-            ShowPopup();
-            return;
-        }
-
-        strawberryCount++;
-
-        Debug.Log("Strawberry masuk basket. Jumlah: " + strawberryCount);
-
-        HideFruitSprite(fruit);
-
-        UpdateCountUI();
-    }
-
-    private void HideFruitSprite(GameObject fruit)
-    {
-        SpriteRenderer spriteRenderer =
-            fruit.GetComponent<SpriteRenderer>();
-
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.enabled = false;
-        }
-    }
 
     private void UpdateCountUI()
     {
@@ -158,11 +154,33 @@ public class IngredientBasket : MonoBehaviour
         }
     }
 
+
     private void ShowPopup()
     {
+        if (popupUI == null)
+            return;
+
+        popupUI.SetActive(true);
+        
+        if (popupCoroutine != null)
+        {
+            StopCoroutine(popupCoroutine);
+        }
+
+        popupCoroutine =
+            StartCoroutine(HidePopupAfterDelay());
+    }
+
+
+    private IEnumerator HidePopupAfterDelay()
+    {
+        yield return new WaitForSeconds(popupDuration);
+
         if (popupUI != null)
         {
-            popupUI.SetActive(true);
+            popupUI.SetActive(false);
         }
+
+        popupCoroutine = null;
     }
 }
