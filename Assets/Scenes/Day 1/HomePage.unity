@@ -280,8 +280,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 342203470}
-        m_TargetAssemblyTypeName: choose, Assembly-CSharp
-        m_MethodName: ClickToOpenSetting
+        m_TargetAssemblyTypeName: UIManagerIngame, Assembly-CSharp
+        m_MethodName: OpenSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -763,7 +763,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f89eaf56736fab448c21ac0d12cddef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setting: {fileID: 304443176}
+  settingsPopup: {fileID: 304443176}
+  orderPopup: {fileID: 0}
+  checkmarkImage: {fileID: 0}
+  recipePopups: []
+  recipePanel: {fileID: 0}
+  nextSceneName: TakeFruit
+  homeSceneName: 
+  CloseButtonOrder: {fileID: 0}
+  CloseButtonRecipe: {fileID: 0}
 --- !u!4 &342203471
 Transform:
   m_ObjectHideFlags: 0
@@ -862,8 +870,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 342203470}
-        m_TargetAssemblyTypeName: choose, Assembly-CSharp
-        m_MethodName: ClickToCloseSetting
+        m_TargetAssemblyTypeName: UIManagerIngame, Assembly-CSharp
+        m_MethodName: CloseSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1070,9 +1078,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 342203470}
+      - m_Target: {fileID: 342203469}
         m_TargetAssemblyTypeName: choose, Assembly-CSharp
-        m_MethodName: Exit
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1203,8 +1211,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 342203470}
-        m_TargetAssemblyTypeName: choose, Assembly-CSharp
-        m_MethodName: OpenScene
+        m_TargetAssemblyTypeName: UIManagerIngame, Assembly-CSharp
+        m_MethodName: NextScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
