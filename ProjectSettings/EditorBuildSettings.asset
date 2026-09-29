@@ -8,16 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Day 1/HomePage.unity
     guid: 13a4d1817716f824290217215674b644
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Day 1/Stroge 1.unity
     guid: 4475a722cffc54a47b174d516ebe20e4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Day 1/Stroge.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Day 1/Kitchen.unity
     guid: 85626ef9fe38ce54786d749567939495
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Day 1/SendJam.unity
     guid: 055ee0aabb3d8244caae268a662122a5
   m_configObjects: {}
