@@ -14,20 +14,34 @@ public class ObjectSwapOnCollision : MonoBehaviour
     [SerializeField] private int requiredCollisionCount = 3;
 
     [Header("Object Settings")]
-    [Tooltip("Object yang akan dimatikan")]
+    [Tooltip("Object sebelum berubah")]
     [SerializeField] private GameObject object1;
 
-    [Tooltip("Object yang akan dinyalakan")]
+    [Tooltip("Object setelah berubah")]
     [SerializeField] private GameObject object2;
 
     [Header("Behaviour")]
-    [Tooltip("Jika aktif, perubahan hanya terjadi satu kali")]
     [SerializeField] private bool triggerOnce = true;
 
     private bool hasTriggered = false;
-
-    // Jumlah collision yang sudah terjadi
     private int collisionCount = 0;
+
+    [Header("Sound effect")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip cuttingSFX;
+
+    [Tooltip("Durasi SFX yang dimainkan (detik)")]
+    [SerializeField] private float cuttingSFXDuration = 0.2f;
+
+    // =====================================================
+    // START
+    // =====================================================
+
+    private void Start()
+    {
+        ResetSwap();
+    }
+
 
     // =====================================================
     // TRIGGER
@@ -41,6 +55,7 @@ public class ObjectSwapOnCollision : MonoBehaviour
         CheckCollision(other.gameObject);
     }
 
+
     // =====================================================
     // COLLISION
     // =====================================================
@@ -51,6 +66,18 @@ public class ObjectSwapOnCollision : MonoBehaviour
             return;
 
         CheckCollision(collision.gameObject);
+    }
+
+
+    // =====================================================
+    // STOP SFX
+    // =====================================================
+    private void StopCuttingSFX()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
     }
 
     // =====================================================
@@ -65,17 +92,31 @@ public class ObjectSwapOnCollision : MonoBehaviour
         if (string.IsNullOrEmpty(targetTag))
         {
             Debug.LogWarning(
-                "Target Tag belum diisi pada " + gameObject.name
+                "Target Tag belum diisi pada " +
+                gameObject.name
             );
 
             return;
         }
 
-        // Cek apakah tag sesuai
         if (!otherObject.CompareTag(targetTag))
             return;
 
-        // Tambah jumlah collision
+        // sfx play
+        if (audioSource != null &&
+     cuttingSFX != null)
+        {
+            audioSource.PlayOneShot(
+                cuttingSFX,
+                1f
+            );
+
+            CancelInvoke(nameof(StopCuttingSFX));
+            Invoke(
+                nameof(StopCuttingSFX),
+                cuttingSFXDuration
+            );
+        }
         collisionCount++;
 
         Debug.Log(
@@ -88,12 +129,12 @@ public class ObjectSwapOnCollision : MonoBehaviour
             requiredCollisionCount
         );
 
-        // Cek apakah sudah mencapai jumlah yang diperlukan
         if (collisionCount >= requiredCollisionCount)
         {
             SwapObject();
         }
     }
+
 
     // =====================================================
     // SWAP OBJECT
@@ -101,19 +142,10 @@ public class ObjectSwapOnCollision : MonoBehaviour
 
     private void SwapObject()
     {
-        if (object1 == null)
+        if (object1 == null || object2 == null)
         {
             Debug.LogWarning(
-                "Object 1 belum dimasukkan ke Inspector!"
-            );
-
-            return;
-        }
-
-        if (object2 == null)
-        {
-            Debug.LogWarning(
-                "Object 2 belum dimasukkan ke Inspector!"
+                "Object 1 atau Object 2 belum diisi!"
             );
 
             return;
@@ -121,9 +153,9 @@ public class ObjectSwapOnCollision : MonoBehaviour
 
         hasTriggered = true;
 
-        // =================================================
-        // COPY TRANSFORM
-        // =================================================
+        // -------------------------------------------------
+        // Samakan Transform
+        // -------------------------------------------------
 
         object2.transform.position =
             object1.transform.position;
@@ -134,51 +166,45 @@ public class ObjectSwapOnCollision : MonoBehaviour
         object2.transform.localScale =
             object1.transform.localScale;
 
-        // =================================================
-        // COPY SORTING LAYER
-        // =================================================
 
-        SpriteRenderer object1Renderer =
+        // -------------------------------------------------
+        // Samakan Sorting Layer
+        // -------------------------------------------------
+
+        SpriteRenderer renderer1 =
             object1.GetComponentInChildren<SpriteRenderer>();
 
-        SpriteRenderer object2Renderer =
+        SpriteRenderer renderer2 =
             object2.GetComponentInChildren<SpriteRenderer>();
 
-        if (object1Renderer != null && object2Renderer != null)
+        if (renderer1 != null && renderer2 != null)
         {
-            object2Renderer.sortingLayerID =
-                object1Renderer.sortingLayerID;
+            renderer2.sortingLayerID =
+                renderer1.sortingLayerID;
 
-            object2Renderer.sortingOrder =
-                object1Renderer.sortingOrder;
+            renderer2.sortingOrder =
+                renderer1.sortingOrder;
         }
 
-        // =================================================
-        // SWAP
-        // =================================================
+
+        // -------------------------------------------------
+        // Swap
+        // -------------------------------------------------
 
         object1.SetActive(false);
         object2.SetActive(true);
 
         Debug.Log(
-            "Object berubah: " +
+            "OBJECT SWAP: " +
             object1.name +
             " → " +
             object2.name
         );
     }
 
-    // =====================================================
-    // GET COLLISION COUNT
-    // =====================================================
-
-    public int GetCollisionCount()
-    {
-        return collisionCount;
-    }
 
     // =====================================================
-    // RESET
+    // RESET SWAP
     // =====================================================
 
     public void ResetSwap()
@@ -192,6 +218,19 @@ public class ObjectSwapOnCollision : MonoBehaviour
         if (object2 != null)
             object2.SetActive(false);
 
-        Debug.Log("Collision count di-reset.");
+        Debug.Log(
+            "Swap di-reset untuk: " +
+            gameObject.name
+        );
+    }
+
+
+    // =====================================================
+    // GET COUNT
+    // =====================================================
+
+    public int GetCollisionCount()
+    {
+        return collisionCount;
     }
 }
