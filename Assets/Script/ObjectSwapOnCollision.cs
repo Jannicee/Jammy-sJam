@@ -1,64 +1,66 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class ObjectSwapOnCollision : MonoBehaviour
 {
     [Header("Collision Settings")]
-    [Tooltip("Tag object yang akan memicu perubahan")]
-    [SerializeField] private string targetTag;
+    [SerializeField] private string targetTag = "Knife";
 
-    [Tooltip("Gunakan Trigger jika Collider menggunakan Is Trigger")]
+    [Tooltip("Aktifkan jika Collider menggunakan Is Trigger")]
     [SerializeField] private bool useTrigger = true;
 
-    [Header("Required Collision")]
-    [Tooltip("Berapa kali harus terjadi collision sebelum object berubah")]
+    [Header("Cutting Settings")]
     [SerializeField] private int requiredCollisionCount = 3;
 
-    [Header("Object Settings")]
-    [Tooltip("Object sebelum berubah")]
-    [SerializeField] private GameObject object1;
+    [Tooltip("Jeda minimal antarhit, dalam detik")]
+    [SerializeField] private float hitInterval = 0.4f;
 
-    [Tooltip("Object setelah berubah")]
+    [Header("Object Settings")]
+    [SerializeField] private GameObject object1;
     [SerializeField] private GameObject object2;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip cuttingSFX;
 
     [Header("Behaviour")]
     [SerializeField] private bool triggerOnce = true;
 
-    private bool hasTriggered = false;
     private int collisionCount = 0;
-
-    [Header("Sound effect")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip cuttingSFX;
-
-    [Tooltip("Durasi SFX yang dimainkan (detik)")]
-    [SerializeField] private float cuttingSFXDuration = 0.2f;
-
-    // =====================================================
-    // START
-    // =====================================================
+    private bool hasTriggered = false;
+    private float nextHitTime = 0f;
 
     private void Start()
     {
         ResetSwap();
     }
 
-
-    // =====================================================
-    // TRIGGER
-    // =====================================================
+    // for sfx stop after seconds
+    IEnumerator StopAfterSeconds(float t)
+    {
+        yield return new WaitForSeconds(t);
+        audioSource.Stop();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!useTrigger)
             return;
 
+        Debug.Log("Trigger masuk: " + other.name);
+
         CheckCollision(other.gameObject);
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (!useTrigger)
+            return;
 
-    // =====================================================
-    // COLLISION
-    // =====================================================
+        // Mengizinkan hit berikutnya jika pisau
+        // masih bersentuhan dengan strawberry.
+        CheckCollision(other.gameObject);
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -68,66 +70,32 @@ public class ObjectSwapOnCollision : MonoBehaviour
         CheckCollision(collision.gameObject);
     }
 
-
-    // =====================================================
-    // STOP SFX
-    // =====================================================
-    private void StopCuttingSFX()
-    {
-        if (audioSource != null)
-        {
-            audioSource.Stop();
-        }
-    }
-
-    // =====================================================
-    // CHECK COLLISION
-    // =====================================================
-
     private void CheckCollision(GameObject otherObject)
     {
         if (triggerOnce && hasTriggered)
             return;
 
-        if (string.IsNullOrEmpty(targetTag))
-        {
-            Debug.LogWarning(
-                "Target Tag belum diisi pada " +
-                gameObject.name
-            );
-
-            return;
-        }
-
         if (!otherObject.CompareTag(targetTag))
             return;
 
-        // sfx play
-        if (audioSource != null &&
-     cuttingSFX != null)
-        {
-            audioSource.PlayOneShot(
-                cuttingSFX,
-                1f
-            );
+        if (Time.time < nextHitTime)
+            return;
 
-            CancelInvoke(nameof(StopCuttingSFX));
-            Invoke(
-                nameof(StopCuttingSFX),
-                cuttingSFXDuration
-            );
-        }
+        nextHitTime = Time.time + hitInterval;
         collisionCount++;
 
         Debug.Log(
-            gameObject.name +
-            " terkena " +
-            otherObject.name +
-            " | Collision Count: " +
-            collisionCount +
-            "/" +
+            "Strawberry dipotong: " +
+            collisionCount + "/" +
             requiredCollisionCount
         );
+
+        if (audioSource != null && cuttingSFX != null)
+        {
+            audioSource.clip = cuttingSFX;
+            audioSource.Play();
+            StartCoroutine(StopAfterSeconds(1f));
+        }
 
         if (collisionCount >= requiredCollisionCount)
         {
@@ -135,41 +103,22 @@ public class ObjectSwapOnCollision : MonoBehaviour
         }
     }
 
-
-    // =====================================================
-    // SWAP OBJECT
-    // =====================================================
-
     private void SwapObject()
     {
         if (object1 == null || object2 == null)
         {
-            Debug.LogWarning(
+            Debug.LogError(
                 "Object 1 atau Object 2 belum diisi!"
             );
-
             return;
         }
 
         hasTriggered = true;
 
-        // -------------------------------------------------
-        // Samakan Transform
-        // -------------------------------------------------
-
-        object2.transform.position =
-            object1.transform.position;
-
-        object2.transform.rotation =
-            object1.transform.rotation;
-
-        object2.transform.localScale =
-            object1.transform.localScale;
-
-
-        // -------------------------------------------------
-        // Samakan Sorting Layer
-        // -------------------------------------------------
+        // Samakan transform sebelum mengaktifkan object2.
+        object2.transform.position = object1.transform.position;
+        object2.transform.rotation = object1.transform.rotation;
+        object2.transform.localScale = object1.transform.localScale;
 
         SpriteRenderer renderer1 =
             object1.GetComponentInChildren<SpriteRenderer>();
@@ -179,38 +128,24 @@ public class ObjectSwapOnCollision : MonoBehaviour
 
         if (renderer1 != null && renderer2 != null)
         {
-            renderer2.sortingLayerID =
-                renderer1.sortingLayerID;
-
-            renderer2.sortingOrder =
-                renderer1.sortingOrder;
+            renderer2.sortingLayerID = renderer1.sortingLayerID;
+            renderer2.sortingOrder = renderer1.sortingOrder;
         }
-
-
-        // -------------------------------------------------
-        // Swap
-        // -------------------------------------------------
 
         object1.SetActive(false);
         object2.SetActive(true);
 
         Debug.Log(
-            "OBJECT SWAP: " +
-            object1.name +
-            " → " +
-            object2.name
+            "OBJECT SWAP BERHASIL: " +
+            object1.name + " -> " + object2.name
         );
     }
 
-
-    // =====================================================
-    // RESET SWAP
-    // =====================================================
-
     public void ResetSwap()
     {
-        hasTriggered = false;
         collisionCount = 0;
+        hasTriggered = false;
+        nextHitTime = 0f;
 
         if (object1 != null)
             object1.SetActive(true);
@@ -218,16 +153,8 @@ public class ObjectSwapOnCollision : MonoBehaviour
         if (object2 != null)
             object2.SetActive(false);
 
-        Debug.Log(
-            "Swap di-reset untuk: " +
-            gameObject.name
-        );
+        Debug.Log("Swap di-reset: " + gameObject.name);
     }
-
-
-    // =====================================================
-    // GET COUNT
-    // =====================================================
 
     public int GetCollisionCount()
     {

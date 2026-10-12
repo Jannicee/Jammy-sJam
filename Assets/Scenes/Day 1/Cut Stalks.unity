@@ -204,7 +204,7 @@ Transform:
   m_GameObject: {fileID: 44052585}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.689234, y: -2.1960125, z: 0.030592812}
+  m_LocalPosition: {x: -9.92, y: -2.23, z: 0.030592812}
   m_LocalScale: {x: 0.36052418, y: 0.40417176, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -251,7 +251,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -288,7 +288,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44052585}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -333,14 +333,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104415209}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -5427,12 +5427,12 @@ MonoBehaviour:
   targetTag: knife
   useTrigger: 1
   requiredCollisionCount: 3
+  hitInterval: 0.4
   object1: {fileID: 1384970414}
   object2: {fileID: 44052585}
-  triggerOnce: 1
   audioSource: {fileID: 447158345}
   cuttingSFX: {fileID: 8300000, guid: cd4b5a69d3c102541b88d31f0aa2f575, type: 3}
-  cuttingSFXDuration: 0.2
+  triggerOnce: 1
 --- !u!4 &460891682
 Transform:
   m_ObjectHideFlags: 0
@@ -6787,12 +6787,12 @@ MonoBehaviour:
   targetTag: knife
   useTrigger: 1
   requiredCollisionCount: 3
+  hitInterval: 0.4
   object1: {fileID: 1384970414}
   object2: {fileID: 44052585}
-  triggerOnce: 1
   audioSource: {fileID: 447158345}
   cuttingSFX: {fileID: 8300000, guid: cd4b5a69d3c102541b88d31f0aa2f575, type: 3}
-  cuttingSFXDuration: 0.2
+  triggerOnce: 1
 --- !u!1 &1554588961
 GameObject:
   m_ObjectHideFlags: 0
@@ -6877,8 +6877,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35
-  m_fontSizeBase: 35
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7175,12 +7175,12 @@ MonoBehaviour:
   targetTag: knife
   useTrigger: 1
   requiredCollisionCount: 3
+  hitInterval: 0.4
   object1: {fileID: 1384970414}
   object2: {fileID: 44052585}
-  triggerOnce: 1
   audioSource: {fileID: 447158345}
   cuttingSFX: {fileID: 8300000, guid: cd4b5a69d3c102541b88d31f0aa2f575, type: 3}
-  cuttingSFXDuration: 0.2
+  triggerOnce: 1
 --- !u!1 &1803891003
 GameObject:
   m_ObjectHideFlags: 0
@@ -7259,6 +7259,7 @@ MonoBehaviour:
   targetFruitTag: StrawberryCut
   fruitCount: 0
   maxFruit: 10
+  swapController: {fileID: 1384970421}
   fruitCountText: {fileID: 1554588963}
   bowlObject1: {fileID: 1021304705}
   bowlObject2: {fileID: 1848847809}
@@ -7280,8 +7281,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1021304707}
-  - {fileID: 1848847811}
   - {fileID: 104415212}
+  - {fileID: 1848847811}
   - {fileID: 1898391778}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

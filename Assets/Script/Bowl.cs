@@ -17,6 +17,8 @@ public class Bowl : MonoBehaviour
     [Tooltip("Jumlah buah yang dibutuhkan untuk menyelesaikan Bowl")]
     [SerializeField] private int maxFruit = 3;
 
+    [Header("Strawberry Reset")]
+    [SerializeField] private ObjectSwapOnCollision swapController;
 
     // =====================================================
     // COUNT UI
@@ -133,6 +135,8 @@ public class Bowl : MonoBehaviour
             other.CompareTag(targetFruitTag) ||
             fruit.gameObject.CompareTag(targetFruitTag);
 
+        if (!other.CompareTag(targetFruitTag))
+            return;
 
         if (!correctTag)
         {
@@ -196,7 +200,12 @@ public class Bowl : MonoBehaviour
         // HILANGKAN BUAH
         // -------------------------------------------------
 
-        fruit.gameObject.SetActive(false);
+        other.gameObject.SetActive(false);
+
+        if (swapController != null)
+        {
+            swapController.ResetSwap();
+        }
 
 
         // -------------------------------------------------
