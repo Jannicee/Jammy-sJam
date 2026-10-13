@@ -32,7 +32,18 @@ public class ObjectSwapOnCollision : MonoBehaviour
 
     private void Start()
     {
-        ResetSwap();
+        collisionCount = 0;
+        hasTriggered = false;
+        nextHitTime = 0f;
+
+        // Buah belum diambil dari Strawberry Box.
+        if (object1 != null)
+            object1.SetActive(false);
+
+        if (object2 != null)
+            object2.SetActive(false);
+
+        //ResetSwap();
     }
 
     // for sfx stop after seconds
@@ -140,6 +151,21 @@ public class ObjectSwapOnCollision : MonoBehaviour
             object1.name + " -> " + object2.name
         );
     }
+    public void PrepareNewFruit()
+    {
+        collisionCount = 0;
+        hasTriggered = false;
+        nextHitTime = 0f;
+
+        if (object2 != null)
+            object2.SetActive(false);
+
+        if (object1 != null)
+            object1.SetActive(true);
+
+        Debug.Log("Strawberry Raw baru siap dipotong.");
+    }
+
 
     public void ResetSwap()
     {
@@ -147,13 +173,7 @@ public class ObjectSwapOnCollision : MonoBehaviour
         hasTriggered = false;
         nextHitTime = 0f;
 
-        if (object1 != null)
-            object1.SetActive(true);
-
-        if (object2 != null)
-            object2.SetActive(false);
-
-        Debug.Log("Swap di-reset: " + gameObject.name);
+        Debug.Log("Status potongan di-reset.");
     }
 
     public int GetCollisionCount()

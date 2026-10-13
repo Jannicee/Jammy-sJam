@@ -9,6 +9,7 @@ TagManager:
   - blueberry
   - knife
   - StrawberryCut
+  - pan
   layers:
   - Default
   - TransparentFX

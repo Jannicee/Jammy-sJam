@@ -10,30 +10,74 @@ public class FruitBox : MonoBehaviour
     [Header("Fruit Object")]
     public GameObject fruitObject;
 
-    private SpriteRenderer fruitDisplay;
+    [Header("Cutting System")]
+    [SerializeField]
+    private ObjectSwapOnCollision swapController;
 
+    private SpriteRenderer fruitDisplay;
+    private Collider2D fruitCollider;
     private bool isHoldingFruit = false;
 
     private void Start()
     {
-        // Ambil SpriteRenderer dari Fruit Object
-        fruitDisplay = fruitObject.GetComponent<SpriteRenderer>();
+        if (fruitObject == null)
+        {
+            Debug.LogError(
+                "Fruit Object belum dimasukkan ke Inspector!"
+            );
+            return;
+        }
 
-        // Sembunyikan buah saat awal
+        // Ambil komponen dari Fruit Object.
+        fruitDisplay =
+            fruitObject.GetComponent<SpriteRenderer>();
+
+        fruitCollider =
+            fruitObject.GetComponent<Collider2D>();
+
+        if (swapController == null)
+        {
+            swapController =
+                fruitObject.GetComponent<ObjectSwapOnCollision>();
+        }
+
+        if (fruitDisplay == null)
+        {
+            Debug.LogError(
+                "SpriteRenderer tidak ditemukan pada Fruit Object!"
+            );
+        }
+
+        if (swapController == null)
+        {
+            Debug.LogError(
+                "ObjectSwapOnCollision tidak ditemukan pada Fruit Object!"
+            );
+        }
+
+        // Sembunyikan buah saat awal.
         fruitObject.SetActive(false);
     }
 
     private void OnMouseDown()
     {
-        Debug.Log(Debug.isDebugBuild ? "Mouse down on: " + gameObject.name : "");
-        isHoldingFruit = true;
+        if (fruitObject == null)
+            return;
+
+        Debug.Log("Mouse down on: " + gameObject.name);
 
         ShowFruit();
+
+        if (fruitObject.activeSelf)
+            isHoldingFruit = true;
     }
 
     private void Update()
     {
-        if (!isHoldingFruit)
+        if (!isHoldingFruit || fruitObject == null)
+            return;
+
+        if (Camera.main == null)
             return;
 
         Vector3 mousePosition = Input.mousePosition;
@@ -44,9 +88,8 @@ public class FruitBox : MonoBehaviour
         Vector3 worldPosition =
             Camera.main.ScreenToWorldPoint(mousePosition);
 
-        worldPosition.z = 0;
+        worldPosition.z = 0f;
 
-        // Gerakkan GAME OBJECT buah
         fruitObject.transform.position = worldPosition;
     }
 
@@ -57,39 +100,61 @@ public class FruitBox : MonoBehaviour
 
     private void ShowFruit()
     {
+        if (fruitObject == null ||
+            fruitDisplay == null ||
+            swapController == null)
+        {
+            Debug.LogWarning(
+                "Fruit Object, SpriteRenderer, atau Swap Controller belum siap."
+            );
+            return;
+        }
+
+        // Tentukan sprite berdasarkan tag Fruit Box.
+        Sprite selectedSprite = null;
+
         if (CompareTag("apple"))
         {
-            fruitDisplay.sprite = appleSprite;
+            selectedSprite = appleSprite;
         }
         else if (CompareTag("blueberry"))
         {
-            fruitDisplay.sprite = blueberrySprite;
+            selectedSprite = blueberrySprite;
         }
         else if (CompareTag("strawberry"))
         {
-            fruitDisplay.sprite = strawberrySprite;
+            selectedSprite = strawberrySprite;
         }
         else
         {
             Debug.LogWarning(
                 "Tag tidak dikenali: " + gameObject.tag
             );
-
             return;
         }
 
-        // Aktifkan object
-        fruitObject.SetActive(true);
+        if (selectedSprite == null)
+        {
+            Debug.LogWarning(
+                "Sprite untuk " + gameObject.tag +
+                " belum dimasukkan ke Inspector!"
+            );
+            return;
+        }
 
-        // Aktifkan kembali sprite
+        // Siapkan buah baru hanya ketika diambil.
+        swapController.PrepareNewFruit();
+
+        // Atur sprite dan aktifkan Raw.
+        fruitDisplay.sprite = selectedSprite;
+        fruitObject.SetActive(true);
         fruitDisplay.enabled = true;
 
-        // Aktifkan kembali collider
-        Collider2D collider = fruitObject.GetComponent<Collider2D>();
+        if (fruitCollider != null)
+            fruitCollider.enabled = true;
 
-        if (collider != null)
-        {
-            collider.enabled = true;
-        }
+        Debug.Log(
+            "Buah baru diambil dari box: " + gameObject.tag
+        );
     }
 }

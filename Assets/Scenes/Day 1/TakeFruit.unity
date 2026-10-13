@@ -248,6 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770d85e36985764458aa91ba51c172cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
 --- !u!4 &132285605
 Transform:
   m_ObjectHideFlags: 0
@@ -964,8 +965,8 @@ GameObject:
   m_Component:
   - component: {fileID: 781865199}
   - component: {fileID: 781865200}
-  - component: {fileID: 781865201}
   - component: {fileID: 781865202}
+  - component: {fileID: 781865203}
   m_Layer: 0
   m_Name: blueberry in box
   m_TagString: blueberry
@@ -1040,22 +1041,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &781865201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781865198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de2195eff41863840b87360113bf7283, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  appleSprite: {fileID: 21300000, guid: c81508a0f2e6b934989a0791d73c4f10, type: 3}
-  blueberrySprite: {fileID: 21300000, guid: d07997a2c91cff74c8aa4593eddf1fa0, type: 3}
-  strawberrySprite: {fileID: 1858818815, guid: 0323b3b5b200c7c4899a91b1e6114492, type: 3}
-  fruitObject: {fileID: 1782771353}
 --- !u!61 &781865202
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1101,6 +1086,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.072708, y: 5.53}
   m_EdgeRadius: 0
+--- !u!114 &781865203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781865198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8125731ea0e05e4c954b6b75e5204eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appleSprite: {fileID: 21300000, guid: c81508a0f2e6b934989a0791d73c4f10, type: 3}
+  blueberrySprite: {fileID: 21300000, guid: d07997a2c91cff74c8aa4593eddf1fa0, type: 3}
+  strawberrySprite: {fileID: 1858818815, guid: 0323b3b5b200c7c4899a91b1e6114492, type: 3}
+  fruitObject: {fileID: 1782771353}
 --- !u!1 &786923824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,8 +1112,8 @@ GameObject:
   m_Component:
   - component: {fileID: 786923825}
   - component: {fileID: 786923826}
-  - component: {fileID: 786923827}
   - component: {fileID: 786923828}
+  - component: {fileID: 786923829}
   m_Layer: 0
   m_Name: strawberry in box
   m_TagString: strawberry
@@ -1187,22 +1188,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &786923827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786923824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de2195eff41863840b87360113bf7283, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  appleSprite: {fileID: 21300000, guid: c81508a0f2e6b934989a0791d73c4f10, type: 3}
-  blueberrySprite: {fileID: 21300000, guid: d07997a2c91cff74c8aa4593eddf1fa0, type: 3}
-  strawberrySprite: {fileID: 1858818815, guid: 0323b3b5b200c7c4899a91b1e6114492, type: 3}
-  fruitObject: {fileID: 1746491807}
 --- !u!61 &786923828
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1248,6 +1233,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.0110188, y: 4.88}
   m_EdgeRadius: 0
+--- !u!114 &786923829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786923824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8125731ea0e05e4c954b6b75e5204eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appleSprite: {fileID: 21300000, guid: c81508a0f2e6b934989a0791d73c4f10, type: 3}
+  blueberrySprite: {fileID: 21300000, guid: d07997a2c91cff74c8aa4593eddf1fa0, type: 3}
+  strawberrySprite: {fileID: 1858818815, guid: 0323b3b5b200c7c4899a91b1e6114492, type: 3}
+  fruitObject: {fileID: 1746491807}
 --- !u!1 &791052474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,7 +1697,7 @@ BoxCollider2D:
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
@@ -1921,8 +1922,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1125369261}
   - component: {fileID: 1125369262}
-  - component: {fileID: 1125369263}
   - component: {fileID: 1125369264}
+  - component: {fileID: 1125369265}
   m_Layer: 0
   m_Name: apple in box
   m_TagString: apple
@@ -1997,22 +1998,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1125369263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125369260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de2195eff41863840b87360113bf7283, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  appleSprite: {fileID: 21300000, guid: c81508a0f2e6b934989a0791d73c4f10, type: 3}
-  blueberrySprite: {fileID: 21300000, guid: d07997a2c91cff74c8aa4593eddf1fa0, type: 3}
-  strawberrySprite: {fileID: 1858818815, guid: 0323b3b5b200c7c4899a91b1e6114492, type: 3}
-  fruitObject: {fileID: 791052474}
 --- !u!61 &1125369264
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2058,6 +2043,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.890499, y: 4.69}
   m_EdgeRadius: 0
+--- !u!114 &1125369265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125369260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8125731ea0e05e4c954b6b75e5204eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appleSprite: {fileID: 21300000, guid: c81508a0f2e6b934989a0791d73c4f10, type: 3}
+  blueberrySprite: {fileID: 21300000, guid: d07997a2c91cff74c8aa4593eddf1fa0, type: 3}
+  strawberrySprite: {fileID: 1858818815, guid: 0323b3b5b200c7c4899a91b1e6114492, type: 3}
+  fruitObject: {fileID: 791052474}
 --- !u!1 &1258018382
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,18 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BackgroundMusic : MonoBehaviour
 {
     private static BackgroundMusic backgroundMusic;
-    void Awake()
+
+    [Header("Background Music")]
+    [SerializeField] private AudioSource audioSource;
+
+    private void Awake()
     {
-        if(backgroundMusic==null)
+        // Mencegah background music duplikat.
+        if (backgroundMusic == null)
         {
             backgroundMusic = this;
-            DontDestroyOnLoad(backgroundMusic);
+            DontDestroyOnLoad(gameObject);
+
+            // Cari AudioSource jika belum diisi.
+            if (audioSource == null)
+            {
+                audioSource = GetComponent<AudioSource>();
+            }
+
+            if (audioSource != null)
+            {
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+            else
+            {
+                Debug.LogWarning("AudioSource belum dipasang pada BackgroundMusic!");
+            }
         }
-        else{
+        else
+        {
             Destroy(gameObject);
         }
     }
